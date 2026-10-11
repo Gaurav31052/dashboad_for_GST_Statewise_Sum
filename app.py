@@ -146,9 +146,12 @@ def generate_summary(jiomart_file, sales_file, returns_file):
         errors="coerce"
     ).fillna(0)
 
-    # Only delivered orders
+   # Select delivered and pick_up_confirmed orders
     jiomart_df = jiomart_df[
-        jiomart_df[jiomart_status] == "delivered"
+        jiomart_df[jiomart_status].isin([
+            "delivered",
+            "pick_up_confirmed"
+        ])
     ].copy()
 
     jiomart_df = jiomart_df.rename(
